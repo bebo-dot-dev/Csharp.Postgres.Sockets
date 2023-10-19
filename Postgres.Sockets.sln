@@ -1,0 +1,70 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postgres.Sockets", "src\Postgres.Sockets\Postgres.Sockets.csproj", "{29BE4058-AD8B-4705-9434-44EDDBF4202C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postgres.Sockets.Core", "src\Postgres.Sockets.Core\Postgres.Sockets.Core.csproj", "{142D0595-1166-4628-941A-1D553278C383}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postgres.Sockets.Database", "src\Postgres.Sockets.Database\Postgres.Sockets.Database.csproj", "{E1CB6827-0C63-420D-B8CB-B9859533C45E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BD9639D8-2DAD-40E5-B03C-551FE54A8FE0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		global.json = global.json
+		Postgres.Sockets.dcproj = Postgres.Sockets.dcproj
+		docker-compose.yml = docker-compose.yml
+		.dockerignore = .dockerignore
+		README.md = README.md
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5E59A3D0-4BAA-461E-8D82-9DF7165CEB51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{BFE99407-EEB0-46CB-BA39-BC7444C0A28F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{550FB7F7-1090-4A4B-948E-BA0C2867EA2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postgres.Sockets.Database.Tests", "test\integration-tests\Postgres.Sockets.Database.Tests\Postgres.Sockets.Database.Tests.csproj", "{8D8DD82F-4E8C-4FE2-9FCC-37769A0A0862}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postgres.Sockets.Core.Tests", "test\unit-tests\Postgres.Sockets.Core.Tests\Postgres.Sockets.Core.Tests.csproj", "{796E471A-7C18-4A48-A0CE-EFDF33F9BAD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postgres.Sockets.Tests", "test\component-tests\Postgres.Sockets.Tests\Postgres.Sockets.Tests.csproj", "{A4DC532C-13A7-435C-9315-3F64621DDFC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29BE4058-AD8B-4705-9434-44EDDBF4202C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29BE4058-AD8B-4705-9434-44EDDBF4202C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29BE4058-AD8B-4705-9434-44EDDBF4202C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29BE4058-AD8B-4705-9434-44EDDBF4202C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{142D0595-1166-4628-941A-1D553278C383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{142D0595-1166-4628-941A-1D553278C383}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{142D0595-1166-4628-941A-1D553278C383}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{142D0595-1166-4628-941A-1D553278C383}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1CB6827-0C63-420D-B8CB-B9859533C45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1CB6827-0C63-420D-B8CB-B9859533C45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1CB6827-0C63-420D-B8CB-B9859533C45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1CB6827-0C63-420D-B8CB-B9859533C45E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D8DD82F-4E8C-4FE2-9FCC-37769A0A0862}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D8DD82F-4E8C-4FE2-9FCC-37769A0A0862}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D8DD82F-4E8C-4FE2-9FCC-37769A0A0862}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D8DD82F-4E8C-4FE2-9FCC-37769A0A0862}.Release|Any CPU.Build.0 = Release|Any CPU
+		{796E471A-7C18-4A48-A0CE-EFDF33F9BAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{796E471A-7C18-4A48-A0CE-EFDF33F9BAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{796E471A-7C18-4A48-A0CE-EFDF33F9BAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{796E471A-7C18-4A48-A0CE-EFDF33F9BAD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4DC532C-13A7-435C-9315-3F64621DDFC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DC532C-13A7-435C-9315-3F64621DDFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4DC532C-13A7-435C-9315-3F64621DDFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4DC532C-13A7-435C-9315-3F64621DDFC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E1CB6827-0C63-420D-B8CB-B9859533C45E} = {550FB7F7-1090-4A4B-948E-BA0C2867EA2E}
+		{142D0595-1166-4628-941A-1D553278C383} = {5E59A3D0-4BAA-461E-8D82-9DF7165CEB51}
+		{29BE4058-AD8B-4705-9434-44EDDBF4202C} = {BFE99407-EEB0-46CB-BA39-BC7444C0A28F}
+		{8D8DD82F-4E8C-4FE2-9FCC-37769A0A0862} = {550FB7F7-1090-4A4B-948E-BA0C2867EA2E}
+		{796E471A-7C18-4A48-A0CE-EFDF33F9BAD9} = {5E59A3D0-4BAA-461E-8D82-9DF7165CEB51}
+		{A4DC532C-13A7-435C-9315-3F64621DDFC1} = {BFE99407-EEB0-46CB-BA39-BC7444C0A28F}
+	EndGlobalSection
+EndGlobal

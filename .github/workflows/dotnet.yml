@@ -1,0 +1,47 @@
+name: build-and-test
+
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+      - 'test/coveragereport/**'
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+  schedule:
+    - cron: 0 */12 * * *
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.1.26
+      with:
+        reports: "**/TestResults/**/coverage.cobertura.xml"
+        targetdir: "test/coveragereport"
+        reporttypes: "MarkdownSummaryGithub"
+        classfilters: "-Postgres.Sockets.Database.Migrations*"
+        filefilters: "-*.g.cs"
+        assemblyfilters: "-**.Tests"
+    - name: Upload coverage report artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        name: CoverageReport        
+        path: "test/coveragereport"
+    - name: Commit coverage report
+      shell: bash
+      run: git config --global user.email "joe@bebo.dev" && git config --global user.name "Joe" && git fetch --all && git add test/coveragereport/SummaryGithub.md && git commit -m "latest coverage report" && git pull --rebase && git push --force

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8" />
+    <title>Postgres Websockets</title>
+    <style>
+        html {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;    
+        }
+        
+        table {
+            border: 0
+        }
+
+        .comms-log-data {
+            font-family: Consolas, Courier New, Courier, monospace;
+        }
+
+        .comms-log-server {
+            background-color: red;
+            color: white
+        }
+
+        .comms-log-client {
+            background-color: green;
+            color: white
+        }
+    </style>
+</head>
+<body>
+    <h2>Postgres WebSockets Sample Application</h2>
+    <p id="stateLabel">Ready to connect...</p>
+    <div>
+        <label for="connectionUrl">WebSocket Server URL:</label>
+        <select id="connectionUrl"></select>
+        <button id="connectButton" type="submit">Connect</button>
+        <button id="closeButton" disabled>Close Socket</button>
+    </div>
+    <h3>Message Log</h3>
+    <table>
+        <thead>
+            <tr>
+                <td style="width: 100px">From</td>
+                <td style="width: 100px">To</td>
+                <td>Data</td>
+            </tr>
+        </thead>
+        <tbody id="commsLog">
+        </tbody>
+    </table>
+
+    <script>
+        const connectionUrl = document.getElementById("connectionUrl");
+        const connectButton = document.getElementById("connectButton");
+        const stateLabel = document.getElementById("stateLabel");
+        const commsLog = document.getElementById("commsLog");
+        const closeButton = document.getElementById("closeButton");
+        let socket;
+        let keepalive;
+
+        const scheme = document.location.protocol === "https:" ? "wss" : "ws";
+        const port = document.location.port ? (":" + document.location.port) : "";
+        
+        const contexts = ['insert', 'update', 'delete'];
+        contexts.forEach(wsContext => {
+            let opt = document.createElement('option');
+            opt.innerHTML = scheme + "://" + document.location.hostname + port + "/ws/" + wsContext;
+            connectionUrl.appendChild(opt);
+        });
+        
+        function updateState() {
+            function disable() {
+                closeButton.disabled = true;
+                window.clearInterval(keepalive);
+            }
+            function enable() {
+                closeButton.disabled = false;
+                keepalive = window.setInterval(() => {
+                    //socket TTL message
+                    socket.send("1");
+                }, 10000);
+            }
+
+            connectionUrl.disabled = true;
+            connectButton.disabled = true;
+
+            if (!socket) {
+                disable();
+            } else {
+                switch (socket.readyState) {
+                    case WebSocket.CLOSED:
+                        stateLabel.innerHTML = "Closed";
+                        disable();
+                        connectionUrl.disabled = false;
+                        connectButton.disabled = false;
+                        break;
+                    case WebSocket.CLOSING:
+                        stateLabel.innerHTML = "Closing...";
+                        disable();
+                        break;
+                    case WebSocket.CONNECTING:
+                        stateLabel.innerHTML = "Connecting...";
+                        disable();
+                        break;
+                    case WebSocket.OPEN:
+                        stateLabel.innerHTML = "Open";
+                        enable();
+                        break;
+                    default:
+                        stateLabel.innerHTML = "Unknown WebSocket State: " + htmlEscape(socket.readyState);
+                        disable();
+                        break;
+                }
+            }
+        }
+
+        closeButton.onclick = function () {
+            if (!socket || socket.readyState !== WebSocket.OPEN) {
+                alert("socket not connected");
+            }
+            socket.close(1000, "Closing from client");
+        };
+        
+        connectButton.onclick = function() {
+            stateLabel.innerHTML = "Connecting";
+            socket = new WebSocket(connectionUrl.value);
+            socket.onopen = function () {
+                updateState();
+                stateLabel.innerHTML = "Connection opened";
+            };
+            socket.onclose = function (event) {
+                updateState();
+                stateLabel.innerHTML = 'Connection closed. Code: ' + htmlEscape(event.code) + '. Reason: ' + htmlEscape(event.reason);
+            };
+            socket.onerror = updateState;
+            socket.onmessage = function (event) {
+                commsLog.innerHTML += '<tr>' +
+                    '<td class="comms-log-server">Server</td>' +
+                    '<td class="comms-log-client">Client</td>' +
+                    '<td class="comms-log-data">' + htmlEscape(event.data) + '</td></tr>';
+            };
+        };
+
+        function htmlEscape(str) {
+            return str.toString()
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+    </script>
+</body>
+</html>

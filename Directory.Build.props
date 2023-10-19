@@ -1,0 +1,15 @@
+<Project>
+    <PropertyGroup>
+        <Title>Postgres Websockets Integration</Title>
+        <Description>Sample Websocket server with Postgres EF Core</Description>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/bebo-dot-dev/Postgres.Websockets.NET</RepositoryUrl>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    </PropertyGroup>
+</Project>
