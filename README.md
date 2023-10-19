@@ -1,6 +1,8 @@
 ## Postgres.Sockets
 A .NET6 web socket server integration with Postgres.
 
+[![build-and-test](https://github.com/bebo-dot-dev/Csharp.Postgres.Sockets/actions/workflows/dotnet.yml/badge.svg)](https://github.com/bebo-dot-dev/Csharp.Postgres.Sockets/actions/workflows/dotnet.yml)
+
 ### Nuget packages used
 ```
 <PackageReference Include="Mediator.SourceGenerator" Version="2.1.7" />
