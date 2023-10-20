@@ -3,11 +3,14 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace Postgres.Sockets.Core;
 
 internal class WebSocketManager : IWebSocketManager
 {
+    private readonly ILogger<WebSocketManager> _logger;
+    
     private readonly ConcurrentDictionary<Guid, WebSocketContext> _insertSockets = new();
     private readonly ConcurrentDictionary<Guid, WebSocketContext> _updateSockets = new();
     private readonly ConcurrentDictionary<Guid, WebSocketContext> _deleteSockets = new();
@@ -16,8 +19,10 @@ internal class WebSocketManager : IWebSocketManager
     
     private readonly JsonSerializerOptions _serializerOptions;
 
-    public WebSocketManager()
+    public WebSocketManager(ILogger<WebSocketManager> logger)
     {
+        _logger = logger;
+        
         _socketDictionary.Add(WebSocketContextType.Insert, _insertSockets);
         _socketDictionary.Add(WebSocketContextType.Update, _updateSockets);
         _socketDictionary.Add(WebSocketContextType.Delete, _deleteSockets);
@@ -54,20 +59,29 @@ internal class WebSocketManager : IWebSocketManager
         
         if (!removed || context.Socket.State == WebSocketState.Aborted) return;
         
+        _logger.LogInformation(
+            "{ContextType} websocket with Id {SocketId} closed and removed.", 
+            context.ContextType,
+            context.SocketId);
+        
         context.Socket.Abort();
         context.SocketFinishedTcs.TrySetResult(context.Socket);
         context.Socket.Dispose();
     }
     
-    private async Task WebSocketListenAsync(WebSocketContext webSocketContext)
+    private async Task WebSocketListenAsync(WebSocketContext context)
     {
         var cts = new CancellationTokenSource();
         cts.CancelAfter(TimeSpan.FromSeconds(60));
-        cts.Token.Register(() => { RemoveWebSocket(webSocketContext); });
+        cts.Token.Register(() => { RemoveWebSocket(context); });
         
-        var webSocket = webSocketContext.Socket;
+        _logger.LogInformation(
+            "New websocket with Id {SocketId} added and listening for {ContextType} data changes.", 
+            context.SocketId,
+            context.ContextType);
         
         var buffer = new byte[1];
+        var webSocket = context.Socket;
         var receiveResult = await webSocket.ReceiveAsync(
             new ArraySegment<byte>(buffer), cts.Token);
 
@@ -78,7 +92,7 @@ internal class WebSocketManager : IWebSocketManager
         }
         
         if (receiveResult.CloseStatus.HasValue)
-            await webSocketContext.Socket.CloseAsync(
+            await context.Socket.CloseAsync(
                 receiveResult.CloseStatus.Value,
                 receiveResult.CloseStatusDescription,
                 cts.Token);

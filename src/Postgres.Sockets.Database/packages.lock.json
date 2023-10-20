@@ -393,6 +393,7 @@
           "Mediator.Abstractions": "[2.1.7, )",
           "Microsoft.CodeAnalysis": "[4.7.0, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[7.0.0, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )",
           "Riok.Mapperly": "[3.2.0, )"
         }
       }

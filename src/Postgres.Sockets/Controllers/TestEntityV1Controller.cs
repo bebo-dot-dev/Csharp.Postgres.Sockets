@@ -26,21 +26,24 @@ public class TestEntityV1Controller : ControllerBase
     /// </summary>
     [ApiExplorerSettings(IgnoreApi = true)] 
     [HttpGet("/ws/{ctxVal}")]
-    public async Task<IActionResult> WebsocketConnect([FromRoute]string ctxVal)
+    public async Task WebsocketConnect([FromRoute]string ctxVal)
     {
-        if (!HttpContext.WebSockets.IsWebSocketRequest || !Enum.TryParse<WebSocketContextType>(ctxVal, true, out var ctxType))
-            return BadRequest();
-        
-        using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-        var socketFinishedTcs = new TaskCompletionSource<WebSocket>();
+        if (HttpContext.WebSockets.IsWebSocketRequest && Enum.TryParse<WebSocketContextType>(ctxVal, true, out var ctxType))
+        {
+            using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+            var socketFinishedTcs = new TaskCompletionSource<WebSocket>();
                         
-        await _webSocketManager.AddWebSocketAsync(
-            new WebSocketContext(
-                ctxType, 
-                webSocket, 
-                socketFinishedTcs));
-        await socketFinishedTcs.Task;
-        return Ok();
+            await _webSocketManager.AddWebSocketAsync(
+                new WebSocketContext(
+                    ctxType, 
+                    webSocket, 
+                    socketFinishedTcs));
+            await socketFinishedTcs.Task;    
+        }
+        else
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
     }
     
     /// <summary>
