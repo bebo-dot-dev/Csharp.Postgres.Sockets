@@ -3,40 +3,40 @@
 
 |||
 |:---|:---|
-| Generated on: | 10/19/2023 - 20:03:33 |
-| Coverage date: | 10/19/2023 - 20:02:59 - 10/19/2023 - 20:03:30 |
+| Generated on: | 10/20/2023 - 11:37:04 |
+| Coverage date: | 10/20/2023 - 11:36:31 - 10/20/2023 - 11:37:01 |
 | Parser: | MultiReport (3x Cobertura) |
 | Assemblies: | 3 |
 | Classes: | 22 |
 | Files: | 17 |
-| **Line coverage:** | 97.4% (303 of 311) |
-| Covered lines: | 303 |
-| Uncovered lines: | 8 |
-| Coverable lines: | 311 |
-| Total lines: | 648 |
+| **Line coverage:** | 96.9% (313 of 323) |
+| Covered lines: | 313 |
+| Uncovered lines: | 10 |
+| Coverable lines: | 323 |
+| Total lines: | 665 |
 | **Branch coverage:** | 77.7% (28 of 36) |
 | Covered branches: | 28 |
 | Total branches: | 36 |
 | **Method coverage:** | [Feature is only available for sponsors](https://reportgenerator.io/pro) |
-| Tag: | 3_6579627304 |
+| Tag: | 7_6587181037 |
 
 </details>
 
 ## Coverage
-<details><summary>Postgres.Sockets - 98.7%</summary>
+<details><summary>Postgres.Sockets - 96.4%</summary>
 
 |**Name**|**Line**|**Branch**|
 |:---|---:|---:|
-|**Postgres.Sockets**|**98.7%**|**81.2%**|
-|Postgres.Sockets.Controllers.TestEntityV1Controller|97.9%|78.5%|
+|**Postgres.Sockets**|**96.4%**|**81.2%**|
+|Postgres.Sockets.Controllers.TestEntityV1Controller|94.2%|78.5%|
 |Program|100%|100%|
 
 </details>
-<details><summary>Postgres.Sockets.Core - 96%</summary>
+<details><summary>Postgres.Sockets.Core - 96.2%</summary>
 
 |**Name**|**Line**|**Branch**|
 |:---|---:|---:|
-|**Postgres.Sockets.Core**|**96%**|**75%**|
+|**Postgres.Sockets.Core**|**96.2%**|**75%**|
 |Postgres.Sockets.Core.HostedService.DataListener|88.8%||
 |Postgres.Sockets.Core.HostedService.DataListenerJob|85.7%||
 |Postgres.Sockets.Core.Incoming.Commands.DeleteTestEntityCommand|100%||
@@ -53,7 +53,7 @@
 |Postgres.Sockets.Core.TestEntity|100%||
 |Postgres.Sockets.Core.TestEntityRequest|100%||
 |Postgres.Sockets.Core.WebSocketContext|100%||
-|Postgres.Sockets.Core.WebSocketManager|94.2%|75%|
+|Postgres.Sockets.Core.WebSocketManager|94.8%|75%|
 
 </details>
 <details><summary>Postgres.Sockets.Database - 98.7%</summary>
