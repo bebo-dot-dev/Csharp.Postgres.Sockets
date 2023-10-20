@@ -38,7 +38,7 @@ jobs:
         filefilters: "-*.g.cs"
         assemblyfilters: "-**.Tests"
     - name: Upload coverage report artifact
-      uses: actions/upload-artifact@v2.2.3
+      uses: actions/upload-artifact@v3
       with:
         name: CoverageReport        
         path: "test/coveragereport"
