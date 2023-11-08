@@ -54,3 +54,5 @@ public enum WebSocketContextType
 
 Once websockets are connected to the socket server with a given `WebSocketContextType`, data changes that are applied in 
 the database of that data context type are broadcast to connected web socket clients.
+
+![sockets screenshot](media/sockets.png?raw=true "Screenshot")
